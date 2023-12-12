@@ -131,13 +131,13 @@ def A1():
         num=(num+2)%50
         print(buf.printValues())
         print(f"ep: {numOfProdEvenWaiting} op: {numOfProdOddWaiting} ec: {numOfConsEvenWaiting} oc: {numOfConsOddWaiting}")
-        if numOfProdOddWaiting>0: # and canA2():
+        if numOfProdOddWaiting>0 and canA2():
             semProdOdd.release()
         else:
-            if numOfConsEvenWaiting>0:# and canB1():
+            if numOfConsEvenWaiting>0 and canB1():
                 semConsEven.release()
             else:
-                if numOfConsOddWaiting>0:# and canB2():
+                if numOfConsOddWaiting>0 and canB2():
                     semConsOdd.release()
                 else:
                     mutex.release()
