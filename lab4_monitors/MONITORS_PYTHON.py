@@ -1,3 +1,7 @@
+from threading import Thread, Semaphore, Monitor
+from time import sleep
+import numpy as np
+
 MAXCOUNT = 10
 
 class ConditionVar:
@@ -84,31 +88,35 @@ class Buffer:
             temp=temp.next
         return values
 
-
-class Monitor:
+class MyMonitor(Monitor):
     def __init__(self):
-        self.x = ConditionVar(1)
-        self.y = ConditionVar(1)
-        self.count = 0
-        self.buffer = Buffer()
+        self.init_lock()
 
-    def enter(self, item):
-        if self.count == MAXCOUNT:
-            self.x.wait()
-        self.buffer.add(item)
-        self.count = self.count + 1
-        if self.count == 1:
-            self.y.signal()
+        #deklaracje zmiennych warunkowych:
+        self.condProdEven = self.Condition()
+        self.condProdOdd = self.Condition()
+        self.condConsEven = self.Condition()
+        self.condConsOdd = self.Condition()
 
-    def remove(self):
-        if self.count == 0:
-            self.y.wait()
-        self.buffer.pop()
-        self.count = self.count - 1
-        if self.count == MAXCOUNT - 1:
-            self.x.signal()
+        #deklaracje zmiennych liczących oczekujące procesy:
+        self.numOfProdEvenWaiting=0
+        self.numOfProdOddWaiting=0
+        self.numOfCondEvenWaiting=0
+        self.numOfConsOddWaiting=0
         
-    
 
-monitorBuffer = Monitor()
+myMonitor = MyMonitor()
+    
+def evenProducer():
+    pass
+
+def oddProcuder():
+    pass
+
+def evenConsumer():
+    pass
+
+def oddConsumer():
+    pass
+
 
