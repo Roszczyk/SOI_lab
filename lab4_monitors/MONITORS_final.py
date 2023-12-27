@@ -14,9 +14,9 @@ class Buffer:
     
     def isEmpty(self):
         if(self.last==None):
-            return 1
+            return True
         else:
-            return 0
+            return False
     
     def add(self, value):
         node = BufferNode(value)
@@ -186,6 +186,12 @@ class MyMonitor:
 
 
 myMonitor = MyMonitor()
+
+myMonitor.buffer.add(np.random.randint(0,50))
+myMonitor.buffer.add(np.random.randint(0,50))
+myMonitor.buffer.add(np.random.randint(0,50))
+myMonitor.buffer.add(np.random.randint(0,50))
+myMonitor.buffer.add(np.random.randint(0,50))
     
 def evenProducer():
     num=0
@@ -212,17 +218,34 @@ def oddConsumer():
         sleep(1)
 
 
+
+
 thread_EP=Thread(target=evenProducer)
 thread_OP=Thread(target=oddProcuder)
 thread_EC=Thread(target=evenConsumer)
 thread_OC=Thread(target=oddConsumer)
+
+# thread_EP2=Thread(target=evenProducer)
+# thread_OP2=Thread(target=oddProcuder)
+# thread_EC2=Thread(target=evenConsumer)
+# thread_OC2=Thread(target=oddConsumer)
 
 thread_EP.start()
 thread_OP.start()
 thread_EC.start()
 thread_OC.start()
 
+# thread_EP2.start()
+# thread_OP2.start()
+# thread_EC2.start()
+# thread_OC2.start()
+
 thread_EP.join()
 thread_OP.join()
 thread_EC.join()
 thread_OC.join()
+
+# thread_EP2.join()
+# thread_OP2.join()
+# thread_EC2.join()
+# thread_OC2.join()
