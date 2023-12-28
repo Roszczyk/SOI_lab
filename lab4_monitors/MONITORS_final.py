@@ -125,8 +125,6 @@ class MyMonitor:
         print(f"EP: {self.buffer.printValues()}")
         if (not self.buffer.countAll()<10):
             self.wait(self.condProdEven)
-            self.condProdEven.waitingCount=self.condProdEven.waitingCount+1
-            self.leave()
         self.buffer.add(item)
         if (self.condConsEven.waitingCount>0 and self.buffer.countAll() > 3 and self.buffer.checkLastValue()%2==0):
             self.signal(self.condConsEven)
@@ -141,8 +139,6 @@ class MyMonitor:
         print(f"OP: {self.buffer.printValues()}")
         if (not self.buffer.countEven()>self.buffer.countOdd()):
             self.wait(self.condProdOdd)
-            self.condProdOdd.waitingCount=self.condProdOdd.waitingCount+1
-            self.leave()
         self.buffer.add(item)
         if (self.condConsOdd.waitingCount>0 and self.buffer.countAll() > 7 and self.buffer.checkLastValue()%2==1):
             self.signal(self.condConsOdd)
@@ -157,8 +153,6 @@ class MyMonitor:
         print(f"EC: {self.buffer.printValues()}")
         if not (self.buffer.countAll() > 3 and self.buffer.checkLastValue()%2==0):
             self.wait(self.condConsEven)
-            self.condConsEven.waitingCount=self.condConsEven.waitingCount+1
-            self.leave()
         self.buffer.pop()
         if (self.condProdEven.waitingCount>0 and self.buffer.countAll()<10):
             self.signal(self.condProdEven)
@@ -173,8 +167,6 @@ class MyMonitor:
         print(f"OC: {self.buffer.printValues()}")
         if not (self.buffer.countAll() > 7 and self.buffer.checkLastValue()%2==1):
             self.wait(self.condConsOdd)
-            self.condConsOdd.waitingCount=self.condConsOdd.waitingCount+1
-            self.leave()
         self.buffer.pop()
         if(self.condProdOdd.waitingCount>0 and self.buffer.countEven()>self.buffer.countOdd()):
             self.signal(self.condProdOdd)
